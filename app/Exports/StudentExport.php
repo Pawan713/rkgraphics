@@ -8,7 +8,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class StudentExport implements FromCollection, WithHeadings, WithDrawings
+class StudentExport implements FromCollection, WithHeadings
+//, WithDrawings
 {
     // public function collection()
     // {
@@ -42,21 +43,21 @@ class StudentExport implements FromCollection, WithHeadings, WithDrawings
     //     return $drawings;
     // }
 
-
-
-
     protected $students;
 
     public function __construct()
     {
-        $this->students = Student::all();
+         $url=explode("/",url()->previous());
+        $user_id=$url[5];
+        $this->students = Student::where('user_id',$user_id)->get();
     }
 
     public function collection()
     {
-        return $this->students->map(function ($student) {
+        return $this->students->map(function ($student,$index) {
+            
             return [
-                'ID'       => $student->id,
+                'ID'       => $index + 1,
                 'Name'     => $student->name,
                 'Father Name'     => $student->father_name,
                 'Mother Name'     => $student->mother_name,
@@ -70,43 +71,43 @@ class StudentExport implements FromCollection, WithHeadings, WithDrawings
                 'Blood Group'     => $student->blood_group,
                 'Address'     => $student->address,
 
-                'Image'    => '', // Placeholder; image added via WithDrawings
+                // 'Image'    => '', // Placeholder; image added via WithDrawings
             ];
         });
     }
 
     public function headings(): array
     {
-        return ['ID', 'Name','Father Name','Mother Name','Addmission No', 'Class', 'Roll No','Date Of Birth', 'Email','Mobile No','Bus No','Blood Group','Address', 'Profile Image'];
+        return ['ID', 'Name','Father Name','Mother Name','Addmission No', 'Class', 'Roll No','Date Of Birth', 'Email','Mobile No','Bus No','Blood Group','Address'];
     }
 
  
 
-     public function drawings()
-    {
-        $drawings = [];
-        $row = 2; // Start from second row (after headings)
+    //  public function drawings()
+    // {
+    //     $drawings = [];
+    //     $row = 2; // Start from second row (after headings)
         
-        foreach ($this->students as $student) {
+    //     foreach ($this->students as $student) {
             
-            $imageRelativePath = 'uploads/students/' . $student->photo;
-            $imageFullPath = public_path($imageRelativePath);
+    //         $imageRelativePath = 'uploads/students/' . $student->photo;
+    //         $imageFullPath = public_path($imageRelativePath);
 
-            if (file_exists($imageFullPath)) {
-                $drawing = new Drawing();
-                $drawing->setName($student->name);
-                $drawing->setDescription('Profile Image');
-                $drawing->setPath($imageFullPath);
-                $drawing->setHeight(50);
-                $drawing->setCoordinates('N' . $row); // Column N = 14th column
-                $drawings[] = $drawing;
-            }
+    //         if (file_exists($imageFullPath)) {
+    //             $drawing = new Drawing();
+    //             $drawing->setName($student->name);
+    //             $drawing->setDescription('Profile Image');
+    //             $drawing->setPath($imageFullPath);
+    //             $drawing->setHeight(50);
+    //             $drawing->setCoordinates('N' . $row); // Column N = 14th column
+    //             $drawings[] = $drawing;
+    //         }
 
-            $row++;
-        }
+    //         $row++;
+    //     }
 
-        return $drawings;
-    }
+    //     return $drawings;
+    // }
 
 
 }

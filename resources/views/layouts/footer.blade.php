@@ -78,5 +78,42 @@
         visibleItems: 4
     });
 </script>
+
+
+<script src="{{ asset('/') }}assets/js/sweetalert.min.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
+<script>
+    $.validate({
+        modules: 'security,file',
+        scrollToTopOnError: false,
+    });
+</script>
+
+<!-- Pop Up Message -->
+<?php if (session()->get('success')): ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        swal({
+            title: "<?php echo session()->get('success'); ?>",
+            text: "<?php echo session()->get('desc'); ?>",
+            showConfirmButton: true,
+            type: 'success'
+        });
+    });
+</script>
+<?php elseif (session()->get('error')): ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        swal({
+            title: "Error",
+            text: "<?php session()->get('error'); ?>",
+            showConfirmButton: true,
+            type: 'error'
+        });
+    });
+</script>
+
+<?php endif; session()->forget(['success','error']); ?>
 </body>
 </html>

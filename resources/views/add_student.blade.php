@@ -21,7 +21,7 @@
                             @csrf
 							<div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Sudent Name" type="text" name="name" required value="{{ old('name') }}">
+									<input class="form-control" placeholder="Student Name" type="text" name="name" required value="{{ old('name') }}">
 								</div>
 							</div>
                             <div class="form-group">
@@ -35,11 +35,6 @@
 								</div>
 							</div>
 
-                            <div class="form-group">
-								<div class="col-sm-12">
-									<input class="form-control" placeholder="Addmission No" type="text" name="addmission_no" required value="{{ old('addmission_no') }}">
-								</div>
-							</div>
 
                             <div class="form-group">
 								<div class="col-sm-12">
@@ -51,6 +46,13 @@
 									<input class="form-control" placeholder="Roll No" type="text" name="roll_no" required value="{{ old('roll_no') }}">
 								</div>
 							</div>
+
+							 <div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" placeholder="Addmission No" type="text" name="addmission_no"  value="{{ old('addmission_no') }}">
+								</div>
+							</div>
+
                             <div class="form-group">
 								<div class="col-sm-12">
 									<input class="form-control" placeholder="Date Of Birth" type="date" name="dob" required value="{{ old('dob') }}">
@@ -71,18 +73,18 @@
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Bus No" type="text" name="bus_no" required value="{{ old('bus_no') }}">
+									<input class="form-control" placeholder="Bus No" type="text" name="bus_no" value="{{ old('bus_no') }}">
 								</div>
 							</div>
 
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Blood Groups" type="text" name="blood_group" required value="{{ old('blood_group') }}">
+									<input class="form-control" placeholder="Blood Groups" type="text" name="blood_group" value="{{ old('blood_group') }}">
 								</div>
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Address" type="text" name="address" required value="{{ old('address') }}">
+									<input class="form-control" placeholder="Address" type="text" name="address"  value="{{ old('address') }}">
 								</div>
 							</div>
 

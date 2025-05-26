@@ -59,7 +59,11 @@ class AdminAuthController extends Controller
 // Export Zip Profile Images
     public function zipExport()
     {
-           $students = \App\Models\Student::all();
+
+        $url=explode("/",url()->previous());
+        $user_id=$url[5];
+
+           $students = \App\Models\Student::where('user_id',$user_id)->get();
                 $zipFileName = 'students-profile-images.zip';
                 $zipFolder = public_path('uploads/students/zips');
                 // Ensure directory exists
@@ -76,15 +80,19 @@ class AdminAuthController extends Controller
 
                 $zip = new ZipArchive;
                 if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+                    $i=1;
                     foreach ($students as $student) {
                         $imagePath = public_path('uploads/students/' . $student->photo);
 
                         if (file_exists($imagePath)) {
                             // Save inside ZIP under `images/` folder
-                            $zip->addFile($imagePath, 'images/' . $student->photo);
+                            // $zip->addFile($imagePath, 'images/' . $student->photo);
+                            $zip->addFile($imagePath, 'images/' . $i.'_'.$student->photo);
                         } else {
                             \Log::warning("Image missing for student: {$student->id} - {$imagePath}");
                         }
+
+                        $i++;
                     }
 
                     $zip->close();

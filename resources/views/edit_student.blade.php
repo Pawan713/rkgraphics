@@ -36,12 +36,6 @@
 
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Addmission No" type="text" name="addmission_no" required value="{{$student->addmission_no}}">
-								</div>
-							</div>
-
-                            <div class="form-group">
-								<div class="col-sm-12">
 									<input class="form-control" placeholder="Class" type="text" name="class" required value="{{$student->class}}">
 								</div>
 							</div>
@@ -50,9 +44,16 @@
 									<input class="form-control" placeholder="Roll No" type="text" name="roll_no" required value="{{$student->roll_no}}">
 								</div>
 							</div>
+
+							  <div class="form-group">
+								<div class="col-sm-12">
+									<input class="form-control" placeholder="Addmission No" type="text" name="addmission_no" value="{{$student->addmission_no}}">
+								</div>
+							</div>
+
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Date Of Birth" type="date" name="dob" required value="{{$student->dob}}">
+									<input class="form-control" placeholder="Date Of Birth" type="date" name="dob" value="{{$student->dob}}">
 								</div>
 							</div>
 							<div class="form-group">
@@ -67,18 +68,18 @@
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Bus No Name" type="text" name="bus_no" required value="{{$student->bus_no}}">
+									<input class="form-control" placeholder="Bus No Name" type="text" name="bus_no" value="{{$student->bus_no}}">
 								</div>
 							</div>
 
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Blood Groups" type="text" name="blood_group" required value="{{$student->blood_group}}">
+									<input class="form-control" placeholder="Blood Groups" type="text" name="blood_group" value="{{$student->blood_group}}">
 								</div>
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Address" type="text" name="address" required value="{{$student->address}}">
+									<input class="form-control" placeholder="Address" type="text" name="address" value="{{$student->address}}">
 								</div>
 							</div>
 

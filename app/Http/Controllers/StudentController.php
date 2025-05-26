@@ -16,7 +16,7 @@ class StudentController extends Controller
     
     public function index()
     {
-         $students = Student::paginate(5);
+         $students = Student::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->paginate(5);
         // $students=Student::get();
         return view('student', compact('students'));
         // return view('view_student')->with('students',$students);
@@ -30,20 +30,14 @@ class StudentController extends Controller
 // Store Student Info
         public function store(Request $request)
         {
-            // dd($request);
+            //  dd(Auth::user()->id);
             $request->validate([
                 'name' => 'required|string|regex:/^[A-Za-z\s]+$/',
                 'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
                 'mother_name' => 'required|regex:/^[A-Za-z\s]+$/',
-                'addmission_no' => 'required|min:2',
                 'class' => 'required',
                 'roll_no' => 'required|numeric|min:1',
-                'dob' => 'required',
-                'email' => 'required|email|unique:students',
-                'mobile' => 'required|numeric|min:10',
-                'bus_no' => 'required|numeric',
-                'blood_group' => 'required',
-                'address' => 'required|string',
+                'photo'=>'required'
             ]);
 
 
@@ -64,19 +58,22 @@ class StudentController extends Controller
                 'mother_name' => $request->mother_name,
                 'addmission_no' => $request->addmission_no,
                 'class' => $request->class,
-                'roll_no' => $request->roll_no,
-                'dob' => $request->dob,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'bus_no' => $request->bus_no,
-                'blood_group' => $request->blood_group,
-                'address' => $request->address,
+                'roll_no' => isset($request->roll_no)?$request->roll_no:"",
+                'dob' => isset($request->dob)?$request->dob:"",
+                'email' =>isset($request->email)?$request->email:"",
+                'mobile' =>isset($request->mobile)?$request->mobile:"" ,
+                'bus_no' =>isset($request->bus_no)?$request->bus_no:"",
+                'blood_group' => isset($request->blood_group)?$request->blood_group:"" ,
+                'address' =>isset($request->address)?$request->address:"" ,
                 'photo' => $filename,
                  'status' => 1,
                  'user_id' => Auth::user()->id,
                 // 'password' => Hash::make($request->password),
             ]);
 
+                //  $msg = \Lang::get('messages.Student created successfully');
+                 $msg="Student created successfully";
+                session()->put('success', $msg);
             return redirect()->route('user.student')->with('success', 'Student created successfully.');
         }
 /// Edit Student
@@ -94,18 +91,11 @@ class StudentController extends Controller
             $student=Student::find($request->id);
 
              $request->validate([
-                'name' => 'required|string',
-                'father_name' => 'required|string',
-                'mother_name' => 'required|string',
-                'addmission_no' => 'required|min:2',
+               'name' => 'required|string|regex:/^[A-Za-z\s]+$/',
+                'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
+                'mother_name' => 'required|regex:/^[A-Za-z\s]+$/',
                 'class' => 'required',
-                'roll_no' => 'required|min:1',
-                'dob' => 'required',
-                'email' => 'required|email',
-                'mobile' => 'required|min:10',
-                'bus_no' => 'required',
-                'blood_group' => 'required',
-                'address' => 'required',
+                'roll_no' => 'required|numeric|min:1',
             ]);
 
             
@@ -134,13 +124,13 @@ class StudentController extends Controller
                 'mother_name' => $request->mother_name,
                 'addmission_no' => $request->addmission_no,
                 'class' => $request->class,
-                'roll_no' => $request->roll_no,
-                'dob' => $request->dob,
-                'email' => $request->email,
-                'mobile' => $request->mobile,
-                'bus_no' => $request->bus_no,
-                'blood_group' => $request->blood_group,
-                'address' => $request->address,
+                'roll_no' => isset($request->roll_no)?$request->roll_no:"",
+                'dob' => isset($request->dob)?$request->dob:"",
+                'email' =>isset($request->email)?$request->email:"",
+                'mobile' =>isset($request->mobile)?$request->mobile:"" ,
+                'bus_no' =>isset($request->bus_no)?$request->bus_no:"",
+                'blood_group' => isset($request->blood_group)?$request->blood_group:"" ,
+                'address' =>isset($request->address)?$request->address:"" ,
                 'photo' => $filename,
                 'user_id' => Auth::user()->id,
                  'status' => 1,

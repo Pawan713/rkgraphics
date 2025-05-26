@@ -3,7 +3,7 @@
  <div class="section-body mt-3">
             <div class="container-fluid">
                 <div class="row clearfix">
-                    <div class="col-12">
+                    {{-- <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <div class="row">
@@ -34,12 +34,11 @@
                                     </div>
                                     <div class="col-lg-2 col-md-4 col-sm-6">
                                         <button type="submit" class="btn btn-primary btn-block">Search</button>
-                                        {{-- <a href="javascript:void(0);" class="btn btn-primary btn-block" title="">Search</a> --}}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-12">
                         <div class="card">
                             <div class="d-flex justify-content-end ">
@@ -104,32 +103,6 @@
                 </div>
             </div>
         </div>
-
-
-<script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#btnExport").click(function () {
-            let table = document.getElementsByTagName("table");
-            alert("hii");
-            console.log(table);
-            debugger;
-            TableToExcel.convert(table[0], {
-                name: `StudentInfo.xlsx`,
-                sheet: {
-                    name: 'Usermanagement'
-                }
-            });
-        });
-    });
-
-
-
-
-
-</script>
-
 
 
 @endsection

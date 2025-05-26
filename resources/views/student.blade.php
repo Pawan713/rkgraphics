@@ -6,6 +6,8 @@
    
     <div class="container">
         <div class="d-flex justify-content-end">
+              <a href="}" class="btn btn-success mr-1" title="Zip Student Image"><i class="bi bi-file-zip"></i></a>
+            <a href="" class="btn btn-success " title="Excel Student Info"><i class="bi bi-file-excel"></i></a>
             <a href="{{route('user.student.add')}}"><button class="btn btn-primary">Add Student</button></a>
           </div>
         <div class="row text-left stat-wrap">
@@ -27,7 +29,7 @@
                     @php $i=1; @endphp
                     @foreach ($students as $student)
                     <tr>
-                        <th scope="row">{{$i}}</th>
+                         <td scope="row">{{ $loop->index + $students->firstItem() }}</td>
                         <td>
                             @if ($student->photo)
                             <img src="{{ asset('uploads/students/' . $student->photo) }}" class="img-thumbnail" width="150" height="150" alt="{{$student->photo}}">
