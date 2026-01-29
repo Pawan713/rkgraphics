@@ -27,5 +27,30 @@
 <script src="{{asset('admin/assets/bundles/c3.bundle.js')}}"></script>
 <script src="{{asset('admin/assets/js/core.js')}}"></script>
 <script src="{{asset('admin/assets/js/page/project-index.js')}}"></script>
+
+
+<?php if (session()->get('success')): ?>
+<script>
+    $(document).ready(function(){
+           Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        });
+    });
+</script>
+<?php elseif (session()->get('error')): ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+           Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
+            // text: '{{ session('error') }}',
+            confirmButtonText: 'OK'
+        });
+    });
+</script>
+<?php endif; session()->forget(['success','error']); ?>
 </body>
 </html>

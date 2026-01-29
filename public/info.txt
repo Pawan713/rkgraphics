@@ -1,3 +1,38 @@
+
+Photo Size-
+Mother and Father is not Mandatory-
+
+
+
+
+
+
+
+
+
+
+
+
+Login Details
+------------
+Admin Login
+-----
+User Id- admin@smartedu.com
+Password- admin123
+--------------------
+User Login
+---
+User Id -user@smartedu.com
+Password- user123
+
+
+
+
+
+
+
+
+
 Database Info
 -------------------------
 User Id:rkgraphicss
@@ -5,3 +40,10 @@ Password:eqpKWq4C%=Wa
 Database Name:rkgraphics
 Table Name: 
 
+
+
+Godday Details
+---------------------
+User Id - pawan.raj713@gmail.com
+Password: Pa55word@
+Pin: 1992

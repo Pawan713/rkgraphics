@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithDrawings;
@@ -48,7 +49,15 @@ class StudentExport implements FromCollection, WithHeadings
     public function __construct()
     {
          $url=explode("/",url()->previous());
-        $user_id=$url[5];
+        // $user_id=$url[5];
+        if(Auth::user()->role=="admin")
+        {
+            $user_id=$url[5];
+        }
+        else
+        {
+            $user_id=Auth::user()->id;
+        }
         $this->students = Student::where('user_id',$user_id)->get();
     }
 

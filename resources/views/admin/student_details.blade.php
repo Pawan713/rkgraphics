@@ -64,10 +64,9 @@
                                     </thead>
                                     <tbody>
                                         @if ($students)
-                                        @php $i=1; @endphp
                                         @foreach ($students as $student)
                                         <tr>
-                                            <td><a href="#">{{$i}}</a></td>
+                                            <td>{{ $loop->index + $students->firstItem() }}</td>
                                             <td><span>{{ucwords($student->name)}}</span></td>
                                             <td>{{ucwords($student->father_name)}}</td>
                                             <td>{{ucwords($student->class)}}</td>
@@ -85,7 +84,6 @@
                                             </a>    --}}
                                         </td>
                                         </tr>
-                                           @php $i++; @endphp
                                               @endforeach
                                         @endif
                                         

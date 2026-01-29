@@ -1,13 +1,15 @@
 @extends('layouts.app')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
 @section('content')	
+
 <div class="section">
    
     <div class="container">
         <div class="d-flex justify-content-end">
-              <a href="}" class="btn btn-success mr-1" title="Zip Student Image"><i class="bi bi-file-zip"></i></a>
-            <a href="" class="btn btn-success " title="Excel Student Info"><i class="bi bi-file-excel"></i></a>
+              <a href="{{route('user.export.photo.zip')}}" class="btn btn-success mr-1" title="Zip Student Image"><i class="bi bi-file-zip"></i></a>
+            <a href="{{route('admin.export.excel')}}" class="btn btn-success " title="Excel Student Info"><i class="bi bi-file-excel"></i></a>
             <a href="{{route('user.student.add')}}"><button class="btn btn-primary">Add Student</button></a>
           </div>
         <div class="row text-left stat-wrap">
@@ -26,7 +28,6 @@
                 </thead>
                 <tbody>
                     @if($students)
-                    @php $i=1; @endphp
                     @foreach ($students as $student)
                     <tr>
                          <td scope="row">{{ $loop->index + $students->firstItem() }}</td>
@@ -65,7 +66,6 @@
                         </td>
                         </tr>
                         <tr>
-                    @php $i++; @endphp
                     @endforeach
                     @endif
                     

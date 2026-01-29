@@ -1,3 +1,30 @@
+
+    <div class="parallax section dbcolor">
+        <div class="container">
+            <div class="row logos">
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{asset('assets/images/logo_01.png')}}" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{asset('assets/images/logo_02.png')}}" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{asset('assets/images/logo_03.png')}}" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{asset('assets/images/logo_04.png')}}" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{asset('assets/images/logo_05.png')}}" alt="" class="img-repsonsive"></a>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-6 wow fadeInUp">
+                    <a href="#"><img src="{{asset('assets/images/logo_06.png')}}" alt="" class="img-repsonsive"></a>
+                </div>
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div><!-- end section -->
+
+
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -27,9 +54,9 @@
                     <ul class="footer-links">
                         <li><a href="#">Home</a></li>
                         {{-- <li><a href="#">Blog</a></li> --}}
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="{{route('pricing')}}">Pricing</a></li>
+                        <li><a href="{{route('about_us')}}">About</a></li>
+                        <li><a href="{{route('contact_us')}}">Contact</a></li>
                     </ul><!-- end links -->
                 </div><!-- end clearfix -->
             </div><!-- end col -->
@@ -80,40 +107,31 @@
 </script>
 
 
-<script src="{{ asset('/') }}assets/js/sweetalert.min.js" type="text/javascript"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
-<script>
-    $.validate({
-        modules: 'security,file',
-        scrollToTopOnError: false,
-    });
-</script>
 
-<!-- Pop Up Message -->
+
 <?php if (session()->get('success')): ?>
-<script type="text/javascript">
-    $(document).ready(function() {
-        swal({
-            title: "<?php echo session()->get('success'); ?>",
-            text: "<?php echo session()->get('desc'); ?>",
-            showConfirmButton: true,
-            type: 'success'
+<script>
+    $(document).ready(function(){
+           Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
         });
     });
 </script>
 <?php elseif (session()->get('error')): ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        swal({
-            title: "Error",
-            text: "<?php session()->get('error'); ?>",
-            showConfirmButton: true,
-            type: 'error'
+           Swal.fire({
+            icon: 'error',
+            title: '{{ session('error') }}',
+            // text: '{{ session('error') }}',
+            confirmButtonText: 'OK'
         });
     });
 </script>
-
 <?php endif; session()->forget(['success','error']); ?>
 </body>
 </html>

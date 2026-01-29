@@ -321,7 +321,7 @@
                     <div class="col-12 col-sm-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">School Summary</h3>
+                                <h3 class="card-title">Contact Us Enquery Summary</h3>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -329,38 +329,29 @@
                                         <thead>
                                             <tr>
                                                 <th>S No</th>
-                                                <th>Student Name</th>
-                                                <th>Photo</th>
-                                                <th>Father Name</th>
-                                                <th>Class</th>
-                                                <th>Roll No</th>
-                                                <th>Mobile No</th>
-                                                <th>Status</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Phone No</th>
+                                                <th>Email</th>
+                                                <th>Message</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                          @if($students)
-                                           @foreach($students as $student)
+                                          @if($contacts)
+                                          @php
+                                              $i=1;
+                                          @endphp
+                                           @foreach($contacts as $contact)
                                             <tr>
-                                                <td>#AD1245</td>
-                                                <td>{{$student->name}}</td>
-                                                <td>
-                                                    <ul class="list-unstyled team-info sm margin-0 w150">
-                                                        <li>
-                                                            {{-- <img src="assets/images/xs/avatar1.jpg" alt="Avatar"> --}}
-
-                                                             <img src="{{ asset('uploads/students/' . $student->photo) }}" alt="{{$student->photo}}">
-
-                                                        </li>
-                                                        {{-- <li class="ml-2"><span>2+</span></li> --}}
-                                                    </ul>
-                                                </td>
-                                                <td>{{$student->father_name}}</td>
-                                                <td>{{$student->class}}</td>
-                                                <td>{{$student->roll_no}}</td>
-                                                <td>{{$student->mobile}}</td>
-                                                <td><span class="tag tag-primary">Active</span></td>
+                                                <td>{{ $i }}</td>
+                                                <td>{{$contact->first_name}}</td>
+                                                <td>{{$contact->last_name}}</td>
+                                                <td>{{$contact->phone}}</td>
+                                                <td>{{$contact->email}}</td>
+                                                <td>{{$contact->message}}</td>
                                             </tr>
+                                            @php $i++; @endphp
+
                                             @endforeach
                                             @endif
                                            

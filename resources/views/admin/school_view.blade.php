@@ -82,9 +82,9 @@
                                             </a> --}}
                                             <a class="btn btn-sm btn-link" href="{{route('admin.all.student',$user->id)}}" data-toggle="tooltip" title="Student View"><i class="fa fa-eye"></i></a>
 
-                                            {{-- <a class="btn btn-sm btn-link" href="javascript:void(0)" data-toggle="tooltip" title="Phone"><i class="fa fa-phone"></i></a>
-                                            <a class="btn btn-sm btn-link" href="javascript:void(0)" data-toggle="tooltip" title="Mail"><i class="fa fa-envelope"></i></a> --}}
-                                            <a class="btn btn-sm btn-link hidden-xs js-sweetalert" data-type="confirm" href="javascript:void(0)" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
+                                             <a class="btn btn-sm btn-link" href="{{route('admin.school.edit',$user->id)}}" data-toggle="tooltip" title="School Edit"><i class="fa fa-pencil"></i></a>
+
+                                            <a class="btn btn-sm btn-link hidden-xs js-sweetalert" data-type="confirm" href="{{route('admin.school.delete',$user->id)}}" data-toggle="tooltip" title="Delete"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                         

@@ -25,7 +25,10 @@ class UserAuthController extends Controller
         //     return redirect()->route('user.dashboard');
         // }
 
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        session()->put('error', "Invalid Credentials");
+            return redirect()->back();
+
+        // return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
     public function dashboard()

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Student;
+use App\Models\Contact;
 use App\Exports\StudentExport;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -29,13 +30,16 @@ class AdminAuthController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials']);
+        // session()->put('error', "Invalid Credentials");
+        //     return redirect()->back();
+
+        // return back()->withErrors(['email' => 'Invalid credentials']);
     }
 
     public function dashboard()
     {
-        $students=Student::orderby('id','desc')->get();
-        return view('admin.dashboard')->with('students',$students);
+        $contacts=Contact::orderby('id','desc')->get();
+        return view('admin.dashboard')->with('contacts',$contacts);
     }
 
 /// Get All Students User Wise
@@ -59,6 +63,10 @@ class AdminAuthController extends Controller
 // Export Zip Profile Images
     public function zipExport()
     {
+
+         ini_set('memory_limit', '1024M');
+        ini_set('max_execution_time', 300);
+        ini_set('output_buffering', 'off');
 
         $url=explode("/",url()->previous());
         $user_id=$url[5];
@@ -98,6 +106,7 @@ class AdminAuthController extends Controller
                     $zip->close();
                     if(file_exists($zipFilePath))
                     {
+                        ob_end_clean(); // Clean output buffer to avoid corrupt zip 
                          return response()->download($zipFilePath);
                         // return Response::download($zipFilePath)->deleteFileAfterSend(true); // Trigger the download and delete the file
                     }

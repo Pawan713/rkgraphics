@@ -16,6 +16,7 @@
 <!-- Core css -->
 <link rel="stylesheet" href="{{asset('admin/assets/css/main.css')}}"/>
 <link rel="stylesheet" href="{{asset('admin/assets/css/theme1.css')}}"/>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="font-montserrat">

@@ -10,6 +10,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\Student;
+use Intervention\Image\Facades\Image;
+
+use App\Exports\StudentExport;
+use Maatwebsite\Excel\Facades\Excel;
+use ZipArchive;
+use Illuminate\Support\Facades\Response;
+
 
 class StudentController extends Controller
 {
@@ -30,7 +37,7 @@ class StudentController extends Controller
 // Store Student Info
         public function store(Request $request)
         {
-            //  dd(Auth::user()->id);
+             
             $request->validate([
                 'name' => 'required|string|regex:/^[A-Za-z\s]+$/',
                 'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
@@ -41,22 +48,50 @@ class StudentController extends Controller
             ]);
 
 
+         if ($request->hasFile('photo')) {
+             
+              $image =  $request->file('photo');
+
+        // Resize & compress the image (e.g., 800px width, keep aspect ratio)
+        $resizedImage = Image::make($image)
+            ->resize(800, null, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize(); // Prevent upsizing if smaller than 800px
+            })
+            ->encode($image->getClientOriginalExtension(), 60); // 70% quality compression
+
 
             // Upload media
-                $upload_video_link =  $request->file('photo');
+              
                 $extension = $request->file('photo')->getClientOriginalExtension();
                 $dir = public_path() .'/uploads/students/';
-                
+              
                 $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                  dd($resizedImage);
                 $var = $request->file('photo')->move($dir, $filename);
+                
                 // $data->media = $filename;
                 // $data->save();
+                
+
+        // Save to storage (public path or storage/app/public)
+        // Storage::put("public/uploads/students/{$filename}", $resizedImage);
+
+        
+
+        // return back()->with('success', 'Image uploaded and compressed.');
+    }
+
+
+
+            
+
 
             Student::create([
                 'name' => $request->name,
                 'father_name' => $request->father_name,
                 'mother_name' => $request->mother_name,
-                'addmission_no' => $request->addmission_no,
+                'addmission_no' => isset($request->addmission_no)?$request->addmission_no:"",
                 'class' => $request->class,
                 'roll_no' => isset($request->roll_no)?$request->roll_no:"",
                 'dob' => isset($request->dob)?$request->dob:"",
@@ -71,10 +106,12 @@ class StudentController extends Controller
                 // 'password' => Hash::make($request->password),
             ]);
 
+                // return redirect()->back()->with('success', 'Data added successfully!');
                 //  $msg = \Lang::get('messages.Student created successfully');
-                 $msg="Student created successfully";
-                session()->put('success', $msg);
-            return redirect()->route('user.student')->with('success', 'Student created successfully.');
+                //  $msg="Student added Successfully";
+                session()->put('success', "Student added Successfully!");
+                 return redirect()->route('user.student');
+            // ->with('success', 'Student created successfully.');
         }
 /// Edit Student
         public function edit(Request $request,$id)
@@ -97,7 +134,6 @@ class StudentController extends Controller
                 'class' => 'required',
                 'roll_no' => 'required|numeric|min:1',
             ]);
-
             
 
 
@@ -105,8 +141,7 @@ class StudentController extends Controller
                 // Upload media
                         $upload_video_link =  $request->file('photo');
                         $extension = $request->file('photo')->getClientOriginalExtension();
-                        $dir = public_path() .'/uploads/students/';
-                        
+                        $dir = public_path() .'/uploads/students/';                     
                         $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
                         $var = $request->file('photo')->move($dir, $filename);
 
@@ -122,7 +157,7 @@ class StudentController extends Controller
                  'name' => $request->name,
                 'father_name' => $request->father_name,
                 'mother_name' => $request->mother_name,
-                'addmission_no' => $request->addmission_no,
+                'addmission_no' => isset($request->addmission_no)?$request->addmission_no:"",
                 'class' => $request->class,
                 'roll_no' => isset($request->roll_no)?$request->roll_no:"",
                 'dob' => isset($request->dob)?$request->dob:"",
@@ -136,7 +171,10 @@ class StudentController extends Controller
                  'status' => 1,
             ]);
 
-            return redirect()->route('user.student')->with('success', 'Student Updated Successfully.');
+             session()->put('success', "Student Updated Successfully!");
+                 return redirect()->route('user.student');
+
+            // return redirect()->route('user.student')->with('success', 'Student Updated Successfully.');
         }
 
 // View Single Student Information
@@ -159,8 +197,76 @@ class StudentController extends Controller
                 File::delete($imagePath);
                 }
             $student->delete();
-            return redirect()->route('user.student')->with('success', 'Student deleted Successfully.');
+            // return redirect()->route('user.student')->with('success', 'Student deleted Successfully.');
+
+             session()->put('success', "Student Deleted Successfully!");
+                 return redirect()->route('user.student');
         }
+
+
+        // Zip Image Exprots In Student Profile
+            public function PhotoZipExport()
+            {
+
+                ini_set('memory_limit', '1024M');
+                ini_set('max_execution_time', 300);
+                ini_set('output_buffering', 'off');
+
+                // $url=explode("/",url()->previous());
+                $user_id=Auth::user()->id;
+
+                $students = \App\Models\Student::where('user_id',$user_id)->get();
+                        $zipFileName = 'students-profile-images.zip';
+                        $zipFolder = public_path('uploads/students/zips');
+                        // Ensure directory exists
+                        if (!file_exists($zipFolder)) {
+                            mkdir($zipFolder, 0755, true);
+                        }
+
+                        $zipFilePath = $zipFolder . '/' . $zipFileName;
+
+                        // Remove old ZIP if exists
+                        if (file_exists($zipFilePath)) {
+                            unlink($zipFilePath);
+                        }
+
+                        $zip = new ZipArchive;
+                        if ($zip->open($zipFilePath, ZipArchive::CREATE) === TRUE) {
+                            $i=1;
+                            foreach ($students as $student) {
+                                $imagePath = public_path('uploads/students/' . $student->photo);
+
+                                if (file_exists($imagePath)) {
+                                    // Save inside ZIP under `images/` folder
+                                    // $zip->addFile($imagePath, 'images/' . $student->photo);
+                                    $zip->addFile($imagePath, 'images/' . $i.'_'.$student->photo);
+                                } else {
+                                    \Log::warning("Image missing for student: {$student->id} - {$imagePath}");
+                                }
+
+                                $i++;
+                            }
+
+                            $zip->close();
+                            if(file_exists($zipFilePath))
+                            {
+                                ob_end_clean(); // Clean output buffer to avoid corrupt zip 
+                                return response()->download($zipFilePath);
+                                // return Response::download($zipFilePath)->deleteFileAfterSend(true); // Trigger the download and delete the file
+                            }
+                            
+                        } else {
+                            return response()->json(['error' => 'Unable to create ZIP file'], 500);
+                        }
+            }
+
+
+    // Exports Excel File Of Student Information
+            public function exportStudents()
+            {
+                // return $this->zipExport();
+                return Excel::download(new StudentExport, 'students.xlsx');
+            }
 
 
 }

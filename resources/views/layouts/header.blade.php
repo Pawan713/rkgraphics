@@ -31,12 +31,7 @@
     <!-- Modernizer for Portfolio -->
     <script src="{{asset('assets/js/modernizer.js')}}"></script>
 	
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.9/sweetalert2.min.css">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="host_version"> 
 
@@ -143,7 +138,7 @@
 				<div class="collapse navbar-collapse" id="navbars-host">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item active"><a class="nav-link" href="{{url('/')}}">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{route('about_us')}}">About Us</a></li>
 						{{-- <li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Course </a>
 							<div class="dropdown-menu" aria-labelledby="dropdown-a">
@@ -160,8 +155,8 @@
 							</div>
 						</li> --}}
 						{{-- <li class="nav-item"><a class="nav-link" href="teachers.html">Teachers</a></li> --}}
-						<li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
-						<li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{route('pricing')}}">Pricing</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{route('contact_us')}}">Contact Us</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						@if (auth()->check() && auth()->user()->role === 'user')
