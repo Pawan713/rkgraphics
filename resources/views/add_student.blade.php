@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')	
-
 <div class="section ">
     <div class="container"> 
 		
@@ -26,12 +25,12 @@
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Father Name" type="text" name="father_name" required value="{{ old('father_name') }}">
+									<input class="form-control" placeholder="Father Name" type="text" name="father_name" value="{{ old('father_name') }}">
 								</div>
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Mother Name" type="text" name="mother_name" required value="{{ old('mother_name') }}">
+									<input class="form-control" placeholder="Mother Name" type="text" name="mother_name" value="{{ old('mother_name') }}">
 								</div>
 							</div>
 
@@ -90,7 +89,12 @@
 
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Student Photo" type="file" name="photo" required alt="Student Photo">
+									{{-- <input class="form-control" placeholder="Student Photo" type="file" name="photo" required alt="Student Photo" onchange="document.querySelector('#output').src=window.URL.createObjectURL(this.files[0])">--}}
+
+									<input class="form-control" placeholder="Student Photo" type="file" name="photo" required alt="Student Photo" onchange="previewImage(event)" />
+								</div>
+								<div class="col-sm-3">
+								  <img id="output" class="img-thumbnail img-fluid" src="#" alt="" style="display: none;height:100px;width:150px;"/>
 								</div>
 							</div>
 
@@ -99,8 +103,7 @@
 									<button type="submit" class="btn btn-light btn-radius btn-brd grd1">
 										Save
 									</button>
-									<button type="reset" class="btn btn-light btn-radius btn-brd grd1">
-										Cancel</button>
+									<button type="reset" class="btn btn-light btn-radius btn-brd grd1">Cancel</button>
 								</div>
 							</div>
 						</form>
@@ -117,5 +120,23 @@
             setTimeout(() => alert.remove(), 500);
         }
     }, 5000); // 5000 ms = 5 seconds
+</script>
+
+
+
+<script>
+	// Add Student Image Preview Before Upload 
+function previewImage(event) {
+    const img = document.getElementById('output');
+    const file = event.target.files[0];
+
+    if (file) {
+        img.src = URL.createObjectURL(file);
+        img.style.display = "block";
+
+        // Optional: free memory after image loads
+        img.onload = () => URL.revokeObjectURL(img.src);
+    }
+}
 </script>
 @endsection

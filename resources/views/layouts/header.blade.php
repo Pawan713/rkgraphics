@@ -4,7 +4,6 @@
     <!-- Basic -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">   
-
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Site Metas -->
@@ -12,11 +11,9 @@
     <meta name="keywords" content="RK Graphics">
     <meta name="description" content="RK Graphics specializes in various graphic design services, including ID card design. They offer personalized ID card designs for a variety of purposes, focusing on creating visually appealing and functional designs. Their services extend to other areas like ID Card & Belts,All Types Of Printing Services, and business cards">
     <meta name="author" content="Pawan Raj">
-
     <!-- Site Icons -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-
+    {{-- <link rel="apple-touch-icon" href="images/apple-touch-icon.png"> --}}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
     <!-- Site CSS -->
@@ -27,14 +24,12 @@
     <link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
-
     <!-- Modernizer for Portfolio -->
     <script src="{{asset('assets/js/modernizer.js')}}"></script>
-	
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="{{asset('assets/js/sweetalert2@11.js')}}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 </head>
 <body class="host_version"> 
-
 	<!-- Modal -->
 	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -114,13 +109,13 @@
 	</div>
 
     <!-- LOADER -->
-	<div id="preloader">
+	{{-- <div id="preloader">
 		<div class="loader-container">
 			<div class="progress-br float shadow">
 				<div class="progress__item"></div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 	<!-- END LOADER -->	
 	
 	<!-- Start header -->

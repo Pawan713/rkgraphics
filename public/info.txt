@@ -13,7 +13,7 @@ Mother and Father is not Mandatory-
 
 
 
-Login Details
+Login Details Of Local
 ------------
 Admin Login
 -----
@@ -24,6 +24,12 @@ User Login
 ---
 User Id -user@smartedu.com
 Password- user123
+
+
+---------------------
+Live Server Details
+User id -pawan.raj713@gmail.com
+Password- User@123
 
 
 

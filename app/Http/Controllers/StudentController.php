@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\Student;
 use Intervention\Image\Facades\Image;
-
 use App\Exports\StudentExport;
 use Maatwebsite\Excel\Facades\Excel;
 use ZipArchive;
@@ -40,8 +39,8 @@ class StudentController extends Controller
              
             $request->validate([
                 'name' => 'required|string|regex:/^[A-Za-z\s]+$/',
-                'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
-                'mother_name' => 'required|regex:/^[A-Za-z\s]+$/',
+                // 'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
+                // 'mother_name' => 'required|regex:/^[A-Za-z\s]+$/',
                 'class' => 'required',
                 'roll_no' => 'required|numeric|min:1',
                 'photo'=>'required'
@@ -51,24 +50,34 @@ class StudentController extends Controller
          if ($request->hasFile('photo')) {
              
               $image =  $request->file('photo');
+            $extension = $request->file('photo')->getClientOriginalExtension();
+        // 1. Create instance
+                    $img = Image::make($image->getRealPath());
+        // 2. Resize dimensions (Crucial for file size)
+        // This scales the image to 800px width and maintains aspect ratio
+                    $img->resize(800, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                        $constraint->upsize(); // Prevents blowing up small images
+                    });
 
-        // Resize & compress the image (e.g., 800px width, keep aspect ratio)
-        $resizedImage = Image::make($image)
-            ->resize(800, null, function ($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize(); // Prevent upsizing if smaller than 800px
-            })
-            ->encode($image->getClientOriginalExtension(), 60); // 70% quality compression
+        // 3. Compress and encode
+        // We encode as 'jpg' with 70% quality to get closer to 100KB
+                    $resource = $img->encode('jpg', 70);
+
+        // 4. Save to disk
+                     $name=str_replace(' ', '_', $request->name);
+                     $filename = $name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                    $path = public_path('uploads/students/' . $filename);
+                    $resource->save($path);
 
 
             // Upload media
               
-                $extension = $request->file('photo')->getClientOriginalExtension();
-                $dir = public_path() .'/uploads/students/';
-              
-                $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
-                  dd($resizedImage);
-                $var = $request->file('photo')->move($dir, $filename);
+                
+                // $dir = public_path() .'/uploads/students/';
+                // $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                //   dd($resizedImage);
+                // $var = $request->file('photo')->move($dir, $filename);
                 
                 // $data->media = $filename;
                 // $data->save();
@@ -83,24 +92,20 @@ class StudentController extends Controller
     }
 
 
-
-            
-
-
             Student::create([
-                'name' => $request->name,
-                'father_name' => $request->father_name,
-                'mother_name' => $request->mother_name,
+                'name' => strtolower($request->name),
+                'father_name' =>strtolower(isset($request->father_name)?$request->father_name:""), 
+                'mother_name' =>strtolower(isset($request->mother_name)?$request->mother_name:""),
                 'addmission_no' => isset($request->addmission_no)?$request->addmission_no:"",
                 'class' => $request->class,
                 'roll_no' => isset($request->roll_no)?$request->roll_no:"",
                 'dob' => isset($request->dob)?$request->dob:"",
-                'email' =>isset($request->email)?$request->email:"",
+                'email' =>strtolower(isset($request->email)?$request->email:""),
                 'mobile' =>isset($request->mobile)?$request->mobile:"" ,
                 'bus_no' =>isset($request->bus_no)?$request->bus_no:"",
                 'blood_group' => isset($request->blood_group)?$request->blood_group:"" ,
                 'address' =>isset($request->address)?$request->address:"" ,
-                'photo' => $filename,
+                'photo' => trim($filename),
                  'status' => 1,
                  'user_id' => Auth::user()->id,
                 // 'password' => Hash::make($request->password),
@@ -129,8 +134,8 @@ class StudentController extends Controller
 
              $request->validate([
                'name' => 'required|string|regex:/^[A-Za-z\s]+$/',
-                'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
-                'mother_name' => 'required|regex:/^[A-Za-z\s]+$/',
+                // 'father_name' => 'required|regex:/^[A-Za-z\s]+$/',
+                // 'mother_name' => 'required|regex:/^[A-Za-z\s]+$/',
                 'class' => 'required',
                 'roll_no' => 'required|numeric|min:1',
             ]);
@@ -139,11 +144,31 @@ class StudentController extends Controller
 
                 if(!empty($request->photo)) {
                 // Upload media
-                        $upload_video_link =  $request->file('photo');
+                        $image =  $request->file('photo');
                         $extension = $request->file('photo')->getClientOriginalExtension();
-                        $dir = public_path() .'/uploads/students/';                     
-                        $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
-                        $var = $request->file('photo')->move($dir, $filename);
+                        // $dir = public_path() .'/uploads/students/';                     
+                        // $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                        // $var = $request->file('photo')->move($dir, $filename);
+
+                        // 1. Create instance
+                                    $img = Image::make($image->getRealPath());
+                        // 2. Resize dimensions (Crucial for file size)
+                        // This scales the image to 800px width and maintains aspect ratio
+                                    $img->resize(800, null, function ($constraint) {
+                                        $constraint->aspectRatio();
+                                        $constraint->upsize(); // Prevents blowing up small images
+                                    });
+
+                        // 3. Compress and encode
+                        // We encode as 'jpg' with 70% quality to get closer to 100KB
+                                    $resource = $img->encode('jpg', 70);
+
+                        // 4. Save to disk
+                                    $name=str_replace(' ', '_', $request->name);
+                                    $filename = $name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                                    $path = public_path('uploads/students/' . $filename);
+                                    $resource->save($path);
+
 
                     }
                     else
@@ -154,19 +179,19 @@ class StudentController extends Controller
     
             $student->update([
 
-                 'name' => $request->name,
-                'father_name' => $request->father_name,
-                'mother_name' => $request->mother_name,
+                 'name' => strtolower($request->name),
+               'father_name' =>strtolower(isset($request->father_name)?$request->father_name:""), 
+                'mother_name' =>strtolower(isset($request->mother_name)?$request->mother_name:""),
                 'addmission_no' => isset($request->addmission_no)?$request->addmission_no:"",
                 'class' => $request->class,
                 'roll_no' => isset($request->roll_no)?$request->roll_no:"",
                 'dob' => isset($request->dob)?$request->dob:"",
-                'email' =>isset($request->email)?$request->email:"",
+                'email' =>strtolower(isset($request->email)?$request->email:""),
                 'mobile' =>isset($request->mobile)?$request->mobile:"" ,
                 'bus_no' =>isset($request->bus_no)?$request->bus_no:"",
                 'blood_group' => isset($request->blood_group)?$request->blood_group:"" ,
                 'address' =>isset($request->address)?$request->address:"" ,
-                'photo' => $filename,
+                'photo' => trim($filename),
                 'user_id' => Auth::user()->id,
                  'status' => 1,
             ]);
@@ -190,11 +215,11 @@ class StudentController extends Controller
         {
             $student=Student::find($request->id);
                // Define the image path
-            $imagePath = public_path('uploads/students/' . $student->photo);
+            $imagePath = public_path('uploads/students/'.$student->photo);
 
             // Check if the file exists and delete it
             if (File::exists($imagePath)) {
-                File::delete($imagePath);
+                    File::delete($imagePath);
                 }
             $student->delete();
             // return redirect()->route('user.student')->with('success', 'Student deleted Successfully.');

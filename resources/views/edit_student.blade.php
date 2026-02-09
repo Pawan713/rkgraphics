@@ -25,12 +25,12 @@
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Father Name" type="text" name="father_name" required value="{{$student->father_name}}">
+									<input class="form-control" placeholder="Father Name" type="text" name="father_name" value="{{$student->father_name}}">
 								</div>
 							</div>
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Mother Name" type="text" name="mother_name" required value="{{$student->mother_name}}">
+									<input class="form-control" placeholder="Mother Name" type="text" name="mother_name" value="{{$student->mother_name}}">
 								</div>
 							</div>
 
@@ -85,9 +85,17 @@
 
                             <div class="form-group">
 								<div class="col-sm-12">
-									<input class="form-control" placeholder="Student Photo" type="file" name="photo" alt="Student Photo">
-                                    <img src="{{ asset('uploads/students/' . $student->photo) }}" class="img-thumbnail" width="150" height="150" alt="{{$student->photo}}">
+									{{-- <input class="form-control" placeholder="Student Photo" type="file" name="photo" alt="Student Photo"> --}}
 
+									<input class="form-control" placeholder="Student Photo" type="file" name="photo" required alt="Student Photo" onchange="document.querySelector('#output').src=window.URL.createObjectURL(this.files[0])">
+
+                                 
+
+								</div>
+
+								<div class="col-sm-3">
+								  {{-- <img id="output" class="img-thumbnail img-fluid" src="#" alt=""/> --}}
+								     <img id="output" src="{{ asset('uploads/students/' . $student->photo) }}" class="img-thumbnail img-fluid" width="150" height="150" alt="{{$student->photo}}">
 								</div>
                                 
 							</div>

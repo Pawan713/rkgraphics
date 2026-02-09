@@ -28,7 +28,7 @@
 				</div><!-- end section -->
 			</div>
 			<div class="carousel-item">
-				<div id="home" class="first-section" style="background-image:url('{{asset('assets/images/slider-02.jpg')}}');">
+				<div id="home" class="first-section" style="background-image:url('{{asset('assets/images/id_card_2.jpeg')}}');">
 					<div class="dtab">
 						<div class="container">
 							<div class="row">
@@ -47,7 +47,7 @@
 				</div><!-- end section -->
 			</div>
 			<div class="carousel-item">
-				<div id="home" class="first-section" style="background-image:url('{{asset('assets/images/slider-03.jpg')}}');">
+				<div id="home" class="first-section" style="background-image:url('{{asset('assets/images/id_card.jpeg')}}');">
 					<div class="dtab">
 						<div class="container">
 							<div class="row">
