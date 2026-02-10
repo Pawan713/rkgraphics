@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <!-- Site Metas -->
     <title>R.K.Graphics</title>  
-    <meta name="keywords" content="RK Graphics">
+    <meta name="keywords" content="RK Graphics,ID card design,RK Graphics In Ranchi,Rk Graphic Id in Rasda Patratu Ramgarh">
     <meta name="description" content="RK Graphics specializes in various graphic design services, including ID card design. They offer personalized ID card designs for a variety of purposes, focusing on creating visually appealing and functional designs. Their services extend to other areas like ID Card & Belts,All Types Of Printing Services, and business cards">
     <meta name="author" content="Pawan Raj">
+	<meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Site Icons -->
-    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{asset('assets/images/favicon.jpg')}}" type="image/x-icon" />
     {{-- <link rel="apple-touch-icon" href="images/apple-touch-icon.png"> --}}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
@@ -27,6 +28,8 @@
     <!-- Modernizer for Portfolio -->
     <script src="{{asset('assets/js/modernizer.js')}}"></script>
 	<script src="{{asset('assets/js/sweetalert2@11.js')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.2.1/compressor.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
 </head>
 <body class="host_version"> 
@@ -109,14 +112,22 @@
 	</div>
 
     <!-- LOADER -->
-	{{-- <div id="preloader">
+	<div id="preloader">
 		<div class="loader-container">
 			<div class="progress-br float shadow">
 				<div class="progress__item"></div>
 			</div>
 		</div>
-	</div> --}}
+	</div>
 	<!-- END LOADER -->	
+
+	<!-- Percentage LOADER -->
+	<div class="progress-container" style="width: 100%; background: #eee; border-radius: 5px;">
+    <div  id="dynamic-bar" style="width: 0%; height: 30px; background: #28a745; text-align: center; color: white; line-height: 30px;">
+        0%
+    </div>
+	</div>
+	<!-- Percentage END LOADER -->	
 	
 	<!-- Start header -->
 	<header class="top-navbar">

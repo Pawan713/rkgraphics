@@ -34,7 +34,7 @@ Route::get('/admin/dashboard', [AdminAuthController::class, 'dashboard'])->middl
 Route::get('/admin/school', [SchoolController::class, 'index'])->middleware('admin')->name('admin.school');
 Route::post('/admin/school/add', [SchoolController::class, 'add_School'])->middleware('admin')->name('admin.school.add');
 Route::get('/admin/editSchool/{id}', [SchoolController::class, 'SchoolEdit'])->middleware('admin')->name('admin.school.edit');
-Route::post('/admin/pdateSchool/{id}', [SchoolController::class, 'SchoolUpdate'])->middleware('admin')->name('admin.school.update');
+Route::post('/admin/updateSchool/{id}', [SchoolController::class, 'SchoolUpdate'])->middleware('admin')->name('admin.school.update');
 Route::get('/admin/deleteSchool/{id}', [SchoolController::class, 'DeleteSchool'])->middleware('admin')->name('admin.school.delete');
 
 
@@ -57,7 +57,7 @@ Route::get('/user/addstudent', [StudentController::class, 'create'])->middleware
 Route::post('/user/storestudent', [StudentController::class, 'store'])->middleware('auth')->name('user.student.store');
 
 Route::get('/user/editstudent/{id}', [StudentController::class, 'edit'])->middleware('auth')->name('user.student.edit');
-Route::post('/user/updatestudent/{id}', [StudentController::class, 'update'])->middleware('auth')->name('user.student.update');
+Route::put('/user/updatestudent/{id}', [StudentController::class, 'update'])->middleware('auth')->name('user.student.update');
 
 Route::get('/user/viewstudent/{id}', [StudentController::class, 'view'])->middleware('auth')->name('user.student.view');
 Route::get('/user/deletestudent/{id}', [StudentController::class, 'destroy'])->middleware('auth')->name('user.student.delete');

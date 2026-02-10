@@ -36,6 +36,8 @@ class StudentController extends Controller
 // Store Student Info
         public function store(Request $request)
         {
+
+        // return $request->all();
              
             $request->validate([
                 'name' => 'required|string|regex:/^[A-Za-z\s]+$/',
@@ -52,32 +54,32 @@ class StudentController extends Controller
               $image =  $request->file('photo');
             $extension = $request->file('photo')->getClientOriginalExtension();
         // 1. Create instance
-                    $img = Image::make($image->getRealPath());
+                    // $img = Image::make($image->getRealPath());
         // 2. Resize dimensions (Crucial for file size)
         // This scales the image to 800px width and maintains aspect ratio
-                    $img->resize(800, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                        $constraint->upsize(); // Prevents blowing up small images
-                    });
+                    // $img->resize(800, null, function ($constraint) {
+                    //     $constraint->aspectRatio();
+                    //     $constraint->upsize(); // Prevents blowing up small images
+                    // });
 
         // 3. Compress and encode
         // We encode as 'jpg' with 70% quality to get closer to 100KB
-                    $resource = $img->encode('jpg', 70);
+                    // $resource = $img->encode('jpg', 70);
 
         // 4. Save to disk
-                     $name=str_replace(' ', '_', $request->name);
-                     $filename = $name.'_'.uniqid() . '_' . time() . '.' . $extension;
-                    $path = public_path('uploads/students/' . $filename);
-                    $resource->save($path);
+                    //  $name=str_replace(' ', '_', $request->name);
+                    //  $filename = $name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                    // $path = public_path('uploads/students/' . $filename);
+                    // $resource->save($path);
 
 
             // Upload media
               
                 
-                // $dir = public_path() .'/uploads/students/';
-                // $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                $dir = public_path() .'/uploads/students/';
+                $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
                 //   dd($resizedImage);
-                // $var = $request->file('photo')->move($dir, $filename);
+                $var = $request->file('photo')->move($dir, $filename);
                 
                 // $data->media = $filename;
                 // $data->save();
@@ -114,8 +116,13 @@ class StudentController extends Controller
                 // return redirect()->back()->with('success', 'Data added successfully!');
                 //  $msg = \Lang::get('messages.Student created successfully');
                 //  $msg="Student added Successfully";
-                session()->put('success', "Student added Successfully!");
-                 return redirect()->route('user.student');
+                // session()->put('success', "Student added Successfully!");
+                //  return redirect()->route('user.student');
+                 return response()->json([
+                            'success' => true,
+                            'redirect_url' => route('user.student'), // Or '/dashboard'
+                            'message' => 'Student added successfully!'
+                        ]);
             // ->with('success', 'Student created successfully.');
         }
 /// Edit Student
@@ -129,6 +136,8 @@ class StudentController extends Controller
 
         public function update(Request $request, $id)
         {
+
+            // return $request->all();
 
             $student=Student::find($request->id);
 
@@ -146,28 +155,28 @@ class StudentController extends Controller
                 // Upload media
                         $image =  $request->file('photo');
                         $extension = $request->file('photo')->getClientOriginalExtension();
-                        // $dir = public_path() .'/uploads/students/';                     
-                        // $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
-                        // $var = $request->file('photo')->move($dir, $filename);
+                        $dir = public_path() .'/uploads/students/';                     
+                        $filename = $request->name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                        $var = $request->file('photo')->move($dir, $filename);
 
                         // 1. Create instance
-                                    $img = Image::make($image->getRealPath());
+                                    // $img = Image::make($image->getRealPath());
                         // 2. Resize dimensions (Crucial for file size)
                         // This scales the image to 800px width and maintains aspect ratio
-                                    $img->resize(800, null, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                        $constraint->upsize(); // Prevents blowing up small images
-                                    });
+                                    // $img->resize(800, null, function ($constraint) {
+                                    //     $constraint->aspectRatio();
+                                    //     $constraint->upsize(); // Prevents blowing up small images
+                                    // });
 
                         // 3. Compress and encode
                         // We encode as 'jpg' with 70% quality to get closer to 100KB
-                                    $resource = $img->encode('jpg', 70);
+                                    // $resource = $img->encode('jpg', 70);
 
                         // 4. Save to disk
-                                    $name=str_replace(' ', '_', $request->name);
-                                    $filename = $name.'_'.uniqid() . '_' . time() . '.' . $extension;
-                                    $path = public_path('uploads/students/' . $filename);
-                                    $resource->save($path);
+                                    // $name=str_replace(' ', '_', $request->name);
+                                    // $filename = $name.'_'.uniqid() . '_' . time() . '.' . $extension;
+                                    // $path = public_path('uploads/students/' . $filename);
+                                    // $resource->save($path);
 
 
                     }
@@ -196,8 +205,14 @@ class StudentController extends Controller
                  'status' => 1,
             ]);
 
-             session()->put('success', "Student Updated Successfully!");
-                 return redirect()->route('user.student');
+            //  session()->put('success', "Student Updated Successfully!");
+            //      return redirect()->route('user.student');
+
+                  return response()->json([
+                            'success' => true,
+                            'redirect_url' => route('user.student'), // Or '/dashboard'
+                            'message' => 'Student Updated successfully!'
+                        ]);
 
             // return redirect()->route('user.student')->with('success', 'Student Updated Successfully.');
         }

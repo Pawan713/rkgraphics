@@ -84,7 +84,7 @@
     <div class="container">
         <div class="footer-distributed">
             <div class="footer-center">                   
-                <p class="footer-company-name">All Rights Reserved. &copy; {{date('Y')}} <a href="#">R.K.Graphics</a> Design By : <a href="">Pawan Raj</a></p>
+                <p class="footer-company-name">All Rights Reserved. &copy; {{date('Y')}} <a href="#">R.K.Graphics</a> Design By : <a href="">Pawan's Code & Labs</a></p>
             </div>
         </div>
     </div><!-- end container -->
