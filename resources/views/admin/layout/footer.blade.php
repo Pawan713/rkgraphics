@@ -52,5 +52,8 @@
     });
 </script>
 <?php endif; session()->forget(['success','error']); ?>
+
+@stack('script')
+
 </body>
 </html>

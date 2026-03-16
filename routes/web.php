@@ -40,6 +40,7 @@ Route::get('/admin/deleteSchool/{id}', [SchoolController::class, 'DeleteSchool']
 
 
 Route::get('/admin/allstudent/{id}', [AdminAuthController::class, 'getAllStudent'])->middleware('admin')->name('admin.all.student');
+Route::get('/search-students', [AdminAuthController::class, 'search'])->middleware('admin')->name('students.search');
 Route::get('/admin/singlestudent/{id}', [AdminAuthController::class, 'getSingleStudent'])->middleware('admin')->name('admin.single.student');
 
 Route::get('/admin/zipExport', [AdminAuthController::class, 'zipExport'])->middleware('admin')->name('admin.export.zip');
@@ -62,8 +63,14 @@ Route::put('/user/updatestudent/{id}', [StudentController::class, 'update'])->mi
 Route::get('/user/viewstudent/{id}', [StudentController::class, 'view'])->middleware('auth')->name('user.student.view');
 Route::get('/user/deletestudent/{id}', [StudentController::class, 'destroy'])->middleware('auth')->name('user.student.delete');
 
+Route::get('/user/search-students', [StudentController::class, 'search'])->middleware('auth')->name('user.students.search');
+
+
 Route::get('/user/StudentPhotoZipExport', [StudentController::class, 'PhotoZipExport'])->middleware('auth')->name('user.export.photo.zip');
 Route::get('/user/excelExport', [AdminAuthController::class, 'exportStudents'])->middleware('auth')->name('admin.export.excel');
+
+
+
 
 
 

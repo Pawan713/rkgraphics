@@ -67,18 +67,18 @@ class StudentExport implements FromCollection, WithHeadings
             
             return [
                 'ID'       => $index + 1,
-                'Name'     => $student->name,
-                'Father Name'     => $student->father_name,
-                'Mother Name'     => $student->mother_name,
+                'Name'     => ucwords($student->name),
+                'Father Name'     => ucwords($student->father_name),
+                'Mother Name'     => ucwords($student->mother_name),
                 'Addmission No'     => $student->addmission_no,
-                'Class'     => $student->class,
+                'Class'     => ucwords($student->class.' '.$student->section),
                 'Roll No'     => $student->roll_no,
                 'Date Of Birth'     => $student->dob,
                 'Email'     => $student->email,
                 'Mobile No'     => $student->mobile,
                 'Bus No'     => $student->bus_no,
                 'Blood Group'     => $student->blood_group,
-                'Address'     => $student->address,
+                'Address'     => ucwords($student->address),
 
                 // 'Image'    => '', // Placeholder; image added via WithDrawings
             ];

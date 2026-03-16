@@ -45,7 +45,7 @@
                     <h4 class="card-title mb-4">School Details</h4>
                     
                     <div class="mb-3">
-                        <strong>Class Name:</strong> {{ ucwords($student->class) }}
+                        <strong>Class Name:</strong> {{ ucwords($student->class.' '.$student->section) }}
                     </div>
                     <div class="mb-3">
                         <strong>Roll No:</strong> {{ $student->roll_no }}

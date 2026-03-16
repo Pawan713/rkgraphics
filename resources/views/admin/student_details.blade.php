@@ -44,13 +44,21 @@
                             <div class="d-flex justify-content-end ">
                                 <a href="{{route('admin.export.zip')}}" class="btn btn-success mr-1" title="Zip Student Image"><i class="bi bi-file-zip"></i></a>
                                 <a href="{{route('admin.export.excel')}}" class="btn btn-success " title="Excel Student Info"><i class="bi bi-file-excel"></i></a>
-                            </div>
+                            </div>                            
                             <div class="table-responsive">
                                 <table class="table table-hover table-striped table-vcenter mb-0 text-nowrap">
                                     <thead>
                                         <tr>
                                             <th colspan="12"><h1>Student Detail</h1></th>
-                                            {{-- <th colspan="3">Activity</th> --}}
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                            {{-- <form action="#" method="GET" class="navbar-search"> --}}
+                                                <div class="input-group">
+                                                    <input type="text" name="search" id="search" class="form-control" placeholder="Search Student/Father Name...">
+                                                </div>
+                                            {{-- </form> --}}
+                                        </td>
                                         </tr>
                                         <tr>
                                             <th>S No</th>
@@ -62,37 +70,15 @@
                                             <th>Activity</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @if ($students)
-                                        @foreach ($students as $student)
-                                        <tr>
-                                            <td>{{ $loop->index + $students->firstItem() }}</td>
-                                            <td><span>{{ucwords($student->name)}}</span></td>
-                                            <td>{{ucwords($student->father_name)}}</td>
-                                            <td>{{ucwords($student->class)}}</td>
-                                            <td>{{$student->mobile}}</td>
-                                            <td>{{$student->email}}</td>
-                                            <td> <a href="{{route('admin.single.student',$student->id)}}" class="btn btn-sm btn-success">
-                                                <i class="bi bi-eye"></i> <!-- view icon -->
-                                            </a>
-                                            {{-- <a href="" class="btn btn-sm btn-primary">
-                                                <i class="bi bi-pencil"></i> <!-- Edit icon -->
-                                            </a>     --}}
-                                            
-                                            {{-- <a href="" class="btn btn-sm btn-danger">
-                                                <i class="bi bi-trash" onclick="return confirm('Are you sure?')"></i> <!-- Edit icon -->
-                                            </a>    --}}
-                                        </td>
-                                        </tr>
-                                              @endforeach
-                                        @endif
+                                    <tbody id="student-list">
+                                       @include('admin.student-table')
                                         
                                        
                                     </tbody>
                                 </table>
 
                                     <!-- Pagination Links -->
-                            <div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center" id="pagination-container">
                                 {!! $students->links('pagination::bootstrap-5') !!}
                             </div>
                             </div>
@@ -102,5 +88,29 @@
             </div>
         </div>
 
+
+@push('script')
+
+<script>
+
+$("#search").on("keyup", function(){
+
+    let url = window.location.pathname;
+    let user_id = url.split('/').pop();
+    let search = $(this).val();
+    $.ajax({
+        url:"{{ route('students.search') }}",
+        type:"GET",
+        data:{search:search,user_id:user_id},
+        success:function(data){
+            $("#student-list").html(data);
+        }
+    });
+
+});
+
+</script>
+
+@endpush
 
 @endsection

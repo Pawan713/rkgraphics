@@ -61,8 +61,11 @@
     color: white">Welcome {{auth()->user()->name}}</h1>
     <div class="dashboard-cards">
       <div class="card-box">
-        <div class="card-title">Total Users</div>
-        <div class="fs-4 text-primary">152</div>
+        <div class="card-title">Total Students</div>
+        @php
+        $totalStudents = \App\Models\Student::where('user_id', auth()->user()->id)->count();
+        @endphp
+        <div class="fs-4 text-primary">{{ $totalStudents }}</div>
       </div>
       <div class="card-box">
         <div class="card-title">Courses</div>

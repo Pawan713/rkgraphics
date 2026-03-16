@@ -47,8 +47,36 @@ class AdminAuthController extends Controller
     {
         // $students=Student::where('user_id',$id)->orderby('id','desc')->get();
          $students = Student::where('user_id',$id)->orderby('id','desc')->paginate(10);
-        // $students=Student::get();
         return view('admin.student_details')->with('students',$students);
+    }
+
+
+// Search Student Information
+  public function search(Request $request)
+    {
+        
+        $user_id = trim($request->user_id);
+        $search = trim($request->search);
+
+        $students = Student::query()
+
+            ->when($user_id, function ($query, $user_id) {
+                $query->where('user_id', $user_id);
+            })
+            ->when($search, function ($query, $search) {
+                $query->where(function($q) use ($search){
+                    $q->where('name','like',"%{$search}%")
+                    ->orWhere('father_name','like',"%{$search}%")
+                    ->orWhere('mobile','like',"%{$search}%");
+                });
+            })
+            ->paginate(10);
+
+        if($request->ajax()){
+            return view('admin.student-table',compact('students'))->render();
+        }
+
+        return view('admin.student_details',compact('students'));
     }
 
 // Get Single Student Details

@@ -7,15 +7,21 @@
 <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 <title>RK Graphics</title>
 <!-- Bootstrap Core and vandor -->
-<link rel="stylesheet" href="{{asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css')}}" />
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{asset('admin/assets/plugins/bootstrap/css/bootstrap.min.css')}}" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="{{asset('admin/assets/plugins/summernote/dist/summernote.css')}}"/>
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- Plugins css -->
 <link rel="stylesheet" href="{{asset('admin/assets/plugins/charts-c3/c3.min.css')}}"/>
 <!-- Core css -->
 <link rel="stylesheet" href="{{asset('admin/assets/css/main.css')}}"/>
 <link rel="stylesheet" href="{{asset('admin/assets/css/theme1.css')}}"/>
+
+<link rel="stylesheet" href="{{asset('admin/assets/fonts/Simple-Line-Icons.eot')}}"/>
+<link rel="stylesheet" href="{{asset('admin/assets/fonts/Simple-Line-Icons.ttf')}}"/>
+<link rel="stylesheet" href="{{asset('admin/assets/fonts/Simple-Line-Icons.woff')}}"/>
+<link rel="stylesheet" href="{{asset('admin/assets/fonts/Simple-Line-Icons.woff2')}}"/>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -198,15 +204,15 @@
                 <ul class="list-group list-unstyled">
                     <li class="list-group-item mb-2">
                         <p>Default Theme</p>
-                        <a href="index-2.html"><img src="{{asset('assets/images/themes/default.png')}}" class="img-fluid" /></a>
+                        <a href="index-2.html"><img src="{{asset('admin/assets/images/themes/default.png')}}" class="img-fluid" /></a>
                     </li>
                     <li class="list-group-item mb-2">
                         <p>Night Mode Theme</p>
-                        <a href="project-dark/index.html"><img src="{{asset('assets/images/themes/dark.png')}}" class="img-fluid" /></a>
+                        <a href="project-dark/index.html"><img src="{{asset('admin/assets/images/themes/dark.png')}}" class="img-fluid" /></a>
                     </li>                    
                     <li class="list-group-item mb-2">
                         <p>RTL Version</p>
-                        <a href="project-rtl/index.html"><img src="{{asset('assets/images/themes/rtl.png')}}" class="img-fluid" /></a>
+                        <a href="project-rtl/index.html"><img src="{{asset('admin/assets/images/themes/rtl.png')}}" class="img-fluid" /></a>
                     </li>
                 </ul>
             </div>
@@ -216,7 +222,7 @@
     <div class="user_div">
         <h5 class="brand-name mb-4">RK Graphics<a href="javascript:void(0)" class="user_btn"><i class="icon-logout"></i></a></h5>
         <div class="card-body">
-            <a href="page-profile.html"><img class="card-profile-img" src="assets/images/sm/avatar1.jpg" alt=""></a>
+            <a href="page-profile.html"><img class="card-profile-img" src="{{asset('admin/assets/images/sm/avatar1.jpg')}}" alt=""></a>
             <h6 class="mb-0">{{Auth::user()->name}}</h6>
             <span>{{Auth::user()->email}}</span>
             <div class="d-flex align-items-baseline mt-3">
@@ -257,10 +263,10 @@
                         <h3>Developer Team</h3>
                         <h4>Hangouts</h4>
                         <ul class="list-unstyled team-info margin-0 p-t-5">                                            
-                            <li><img src="assets/images/xs/avatar1.jpg" alt="Avatar"></li>
-                            <li><img src="assets/images/xs/avatar2.jpg" alt="Avatar"></li>
-                            <li><img src="assets/images/xs/avatar3.jpg" alt="Avatar"></li>
-                            <li><img src="assets/images/xs/avatar4.jpg" alt="Avatar"></li>                                            
+                            <li><img src="{{asset('admin/assets/images/sm/avatar1.jpg')}}" alt="Avatar"></li>
+                            <li><img src="{{asset('admin/assets/images/sm/avatar2.jpg')}}" alt="Avatar"></li>
+                            <li><img src="{{asset('admin/assets/images/sm/avatar3.jpg')}}" alt="Avatar"></li>
+                            <li><img src="{{asset('admin/assets/images/sm/avatar4.jpg')}}" alt="Avatar"></li>                                            
                         </ul>
                     </div>
                 </li>
@@ -338,7 +344,7 @@
                                     <ul class="right_chat list-unstyled w350 p-0">
                                         <li class="online">
                                             <a href="javascript:void(0);" class="media">
-                                                <img class="media-object" src="assets/images/xs/avatar4.jpg" alt="">
+                                                <img class="media-object" src="{{asset('admin/assets/images/xs/avatar4.jpg')}}" alt="">
                                                 <div class="media-body">
                                                     <span class="name">Donald Gardner</span>
                                                     <div class="message">It is a long established fact that a reader</div>
@@ -349,7 +355,7 @@
                                         </li>
                                         <li class="online">
                                             <a href="javascript:void(0);" class="media">
-                                                <img class="media-object " src="assets/images/xs/avatar5.jpg" alt="">
+                                                <img class="media-object " src="{{asset('admin/assets/images/xs/avatar5.jpg')}}" alt="">
                                                 <div class="media-body">
                                                     <span class="name">Wendy Keen</span>
                                                     <div class="message">There are many variations of passages of Lorem Ipsum</div>
@@ -360,7 +366,7 @@
                                         </li>
                                         <li class="offline">
                                             <a href="javascript:void(0);" class="media">
-                                                <img class="media-object " src="assets/images/xs/avatar2.jpg" alt="">
+                                                <img class="media-object " src="{{asset('admin/assets/images/xs/avatar2.jpg')}}" alt="">
                                                 <div class="media-body">
                                                     <span class="name">Matt Rosales</span>
                                                     <div class="message">Contrary to popular belief, Lorem Ipsum is not simply</div>
@@ -371,7 +377,7 @@
                                         </li>
                                         <li class="online">
                                             <a href="javascript:void(0);" class="media">
-                                                <img class="media-object " src="assets/images/xs/avatar3.jpg" alt="">
+                                                <img class="media-object " src="{{asset('admin/assets/images/xs/avatar3.jpg')}}" alt="">
                                                 <div class="media-body">
                                                     <span class="name">Phillip Smith</span>
                                                     <div class="message">It has roots in a piece of classical Latin literature from 45 BC</div>

@@ -37,8 +37,43 @@
 
 
                             <div class="form-group">
-								<div class="col-sm-12">
-									<input class="form-control" placeholder="Class" type="text" name="class" id="class" required value="{{ old('class') }}">
+								<div class="col-md-12 mb-2">
+									{{-- <input class="form-control" placeholder="Class" type="text" name="class" id="class" required value="{{ old('class') }}"> --}}
+									<select name="class" id="class" class="form-control" >
+										<option value="">Choose Class</option>
+										<option value="playgroup">Playgroup</option>
+										<option value="pre-nursery">Pre-Nursery</option>
+										<option value="nursery">Nursery</option>
+										<option value="lkg">LKG</option>
+										<option value="ukg">UKG</option>
+										<option value="I">Class 1</option>
+										<option value="II">Class 2</option>
+										<option value="III">Class 3</option>
+										<option value="IV">Class 4</option>
+										<option value="V">Class 5</option>
+										<option value="VI">Class 6</option>
+										<option value="VII">Class 7</option>
+										<option value="VIII">Class 8</option>
+										<option value="IX">Class 9</option>
+										<option value="X">Class 10</option>
+										<option value="XI">Class 11</option>
+										<option value="XII">Class 12</option>
+										<option value="teacher">Teacher</option>
+										<option value="caretaker">Caretaker</option>
+										<option value="driver">Driver</option>
+										<option value="director">Director</option>
+									</select>
+								</div>
+								<div class="col-md-12 mb-2">
+									<select name="section" id="section" class="form-control">
+										<option value="">Choose Section</option>
+										<option value="a">A</option>
+										<option value="b">B</option>
+										<option value="c">C</option>
+										<option value="d">D</option>
+										<option value="e">E</option>
+										<option value="f">F</option>
+									</select>
 								</div>
 							</div>
                             <div class="form-group">
@@ -177,6 +212,7 @@ function previewImage(event) {
             formData.append('father_name', document.getElementById('father_name').value);
             formData.append('mother_name', document.getElementById('mother_name').value);
             formData.append('class', document.getElementById('class').value);
+			formData.append('section', document.getElementById('section').value);
             formData.append('roll_no', document.getElementById('roll_no').value);
 			formData.append('addmission_no', document.getElementById('addmission_no').value);
 			formData.append('dob', document.getElementById('dob').value);

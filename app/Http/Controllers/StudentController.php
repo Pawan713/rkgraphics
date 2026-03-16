@@ -22,11 +22,61 @@ class StudentController extends Controller
     
     public function index()
     {
-         $students = Student::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->paginate(5);
+         $students = Student::where('user_id',Auth::user()->id)->orderBy('id', 'DESC')->paginate(10);
         // $students=Student::get();
         return view('student', compact('students'));
         // return view('view_student')->with('students',$students);
     }
+
+
+
+// Search Student Information
+    public function search(Request $request)
+    {
+        $user_id = trim($request->user_id);
+        $class = trim($request->class);
+        $search = trim($request->search);
+
+        $students = Student::query()
+
+            ->when($user_id, function ($query, $user_id) {
+                $query->where('user_id', $user_id);
+            })
+            ->when($search, function ($query, $search) {
+                $query->where(function($q) use ($search){
+                    $q->where('name','like',"%{$search}%")
+                    ->orWhere('father_name','like',"%{$search}%")
+                    ->orWhere('mobile','like',"%{$search}%");
+                });
+            })
+
+            ->when($class,function($query) use ($class){
+                 return $query->where('class',$class);
+             }) ;
+             
+
+             if($class || $search)
+             {
+                $students = $students->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+             }
+             else
+             {
+                $students = $students->orderBy('id', 'DESC')->get();
+             }
+            //  $students = $students->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+
+            // ->paginate(5);
+
+            // return $students;
+
+        if($request->ajax()){
+            return view('user-student-table',compact('students'))->render();
+        }
+
+        return view('student',compact('students'));
+    }
+
+
 
 // Add New Student Info
         public function create()
@@ -100,6 +150,7 @@ class StudentController extends Controller
                 'mother_name' =>strtolower(isset($request->mother_name)?$request->mother_name:""),
                 'addmission_no' => isset($request->addmission_no)?$request->addmission_no:"",
                 'class' => $request->class,
+                'section' => $request->section,
                 'roll_no' => isset($request->roll_no)?$request->roll_no:"",
                 'dob' => isset($request->dob)?$request->dob:"",
                 'email' =>strtolower(isset($request->email)?$request->email:""),
@@ -193,6 +244,7 @@ class StudentController extends Controller
                 'mother_name' =>strtolower(isset($request->mother_name)?$request->mother_name:""),
                 'addmission_no' => isset($request->addmission_no)?$request->addmission_no:"",
                 'class' => $request->class,
+                'section' => $request->section,
                 'roll_no' => isset($request->roll_no)?$request->roll_no:"",
                 'dob' => isset($request->dob)?$request->dob:"",
                 'email' =>strtolower(isset($request->email)?$request->email:""),

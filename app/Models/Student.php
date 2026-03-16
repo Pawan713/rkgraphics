@@ -14,6 +14,7 @@ class Student extends Model
                 'mother_name',
                 'addmission_no',
                 'class',
+                'section',
                 'roll_no',
                 'dob',
                 'email',

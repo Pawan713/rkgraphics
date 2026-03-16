@@ -1,19 +1,49 @@
 @extends('layouts.app')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
 @section('content')	
 
 <div class="section">
    
     <div class="container">
-        <div class="d-flex justify-content-end">
-              <a href="{{route('user.export.photo.zip')}}" class="btn btn-success mr-1" title="Zip Student Image"><i class="bi bi-file-zip"></i></a>
-            <a href="{{route('admin.export.excel')}}" class="btn btn-success " title="Excel Student Info"><i class="bi bi-file-excel"></i></a>
-            <a href="{{route('user.student.add')}}"><button class="btn btn-primary">Add Student</button></a>
-          </div>
-        <div class="row text-left stat-wrap">
-            <table class="table table-bordered">
+        <div class="row">
+                <div class="col-md-6">
+                    <h2 class="mb-4"> Search Student List</h2>
+                      <input type="text" name="search" id="search" class="form-control" placeholder="Search Student/Father Name/Mobile No..." class="">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    {{-- <h2 class="mb-4"> Select Class</h2> --}}
+                     <select name="class" id="class" class="form-control">
+                        	<option value="">Select Class</option>
+										<option value="playgroup">Playgroup</option>
+										<option value="pre-nursery">Pre-Nursery</option>
+										<option value="nursery">Nursery</option>
+										<option value="lkg">LKG</option>
+										<option value="ukg">UKG</option>
+										<option value="I">Class 1</option>
+										<option value="II">Class 2</option>
+										<option value="III">Class 3</option>
+										<option value="IV">Class 4</option>
+										<option value="V">Class 5</option>
+										<option value="VI">Class 6</option>
+										<option value="VII">Class 7</option>
+										<option value="VIII">Class 8</option>
+										<option value="IX">Class 9</option>
+										<option value="X">Class 10</option>
+										<option value="XI">Class 11</option>
+										<option value="XII">Class 12</option>
+                     </select>
+                </div>
+       </div>
+                <div class="d-flex justify-content-end">
+                    <a href="{{route('user.export.photo.zip')}}" class="btn btn-success mr-1" title="Zip Student Image"><i class="bi bi-file-zip"></i></a>
+                    <a href="{{route('admin.export.excel')}}" class="btn btn-success " title="Excel Student Info"><i class="bi bi-file-excel"></i></a>
+                    <a href="{{route('user.student.add')}}"><button class="btn btn-primary">Add Student</button></a>
+                </div>
+       
+        <div class="row text-left stat-wrap ">
+         <div class="table-responsive">
+            <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
                     <th scope="col">S No</th>
@@ -26,61 +56,75 @@
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @if($students)
-                    @foreach ($students as $student)
-                    <tr>
-                         <td scope="row">{{ $loop->index + $students->firstItem() }}</td>
-                        <td>
-                            @if ($student->photo)
-                            <img src="{{ asset('uploads/students/' . $student->photo) }}" class="img-thumbnail" width="150" height="150" alt="{{$student->photo}}">
-                            @else
-                            <h1>No Photo</h1>
-                            @endif
-                           
-                        </td>
-                        <td>{{ucwords($student->name)}}</td>
-                        <td>{{ucwords($student->father_name)}}</td>
-                        <td>{{ucwords($student->class)}}</td>
-                        <td>{{$student->mobile}}</td>
-                        <td>{{$student->email}}</td>
-                        <td>
-                            <a href="{{route('user.student.view',$student->id)}}" class="btn btn-sm btn-success">
-                                <i class="bi bi-eye"></i> <!-- view icon -->
-                            </a>
-                            <a href="{{route('user.student.edit',$student->id)}}" class="btn btn-sm btn-primary">
-                                <i class="bi bi-pencil"></i> <!-- Edit icon -->
-                            </a>    
-                            
-                            <a href="{{route('user.student.delete',$student->id)}}" class="btn btn-sm btn-danger">
-                                <i class="bi bi-trash" onclick="return confirm('Are you sure?')"></i> <!-- Edit icon -->
-                            </a>   
-                        
-                            {{-- <form action="" method="POST" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
-                                    <i class="bi bi-trash"></i> <!-- Delete icon -->
-                                </button>
-                            </form> --}}
-                        </td>
-                        </tr>
-                        <tr>
-                    @endforeach
-                    @endif
-                    
-                    
+                <tbody id="student-list">
+                  @include('user-student-table')
                 </tbody>
                 </table>
-          
+         </div>
         </div><!-- end row -->
 
            <!-- Pagination Links -->
-        <div class="d-flex justify-content-center">
-            {!! $students->links('pagination::bootstrap-5') !!}
-        </div>
+            @if(method_exists($students,'links'))
+                    <div class="d-flex justify-content-center">
+                    {!! $students->links('pagination::bootstrap-5') !!}
+                    </div>
+            @endif
+
         </div><!-- end container -->
     </div><!-- end section -->
 
+
+
+
+@push('script')
+<script>
+function fetchStudents(){
+    let user_id = "{{ auth()->user()->id }}";
+    let search = $("#search").val();
+    let class_name = $("#class").val();
+    $.ajax({
+        url:"{{ route('user.students.search') }}",
+        type:"GET",
+        data:{
+            search:search,
+            class:class_name,
+            user_id:user_id
+        },
+        success:function(data){
+            $("#student-list").html(data);
+        }
+    });
+
+}
+
+
+
+
+// search by name
+$("#search").on("keyup", function(){
+    fetchStudents();
+});
+
+// search by class
+$("#class").on("change", function(){
+    fetchStudents();
+});
+
+
+// $("#search").on("keyup", function(){
+//     let user_id = "{{ auth()->user()->id }}";
+//     let search = $(this).val();
+//     $.ajax({
+//         url:"{{ route('user.students.search') }}",
+//         type:"GET",
+//         data:{search:search,user_id:user_id},
+//         success:function(data){
+//             $("#student-list").html(data);
+//         }
+//     });
+
+// });
+</script>
+@endpush
 
 @endsection

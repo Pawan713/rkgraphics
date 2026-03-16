@@ -28,8 +28,13 @@ Password- user123
 
 ---------------------
 Live Server Details
+User----
 User id -pawan.raj713@gmail.com
 Password- User@123
+
+admin----
+user id- admin@rkgraphics.com
+Password- admin123
 
 
 

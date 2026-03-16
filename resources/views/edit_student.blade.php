@@ -37,8 +37,43 @@
 							</div>
 
                             <div class="form-group">
-								<div class="col-sm-12">
-									<input class="form-control" placeholder="Class" type="text" name="class" required value="{{$student->class}}" id="class">
+								<div class="col-md-12 mb-2">
+									<select name="class" id="class" class="form-control" >
+										<option value="">Choose Class</option>
+										<option value="playgroup"  {{$student->class=='playgroup'?'selected':''}}>Playgroup</option>
+										<option {{$student->class=='pre-nursery'?'selected':''}} value="pre-nursery">Pre-Nursery</option>
+										<option value="nursery" {{$student->class=='nursery'?'selected':''}}>Nursery</option>
+										<option value="lkg" {{$student->class=='lkg'?'selected':''}}>LKG</option>
+										<option value="ukg" {{$student->class=='ukg'?'selected':''}}>UKG</option>
+										<option value="I" {{$student->class=='I'?'selected':''}}>Class 1</option>
+										<option value="II" {{$student->class=='II'?'selected':''}}>Class 2</option>
+										<option value="III" {{$student->class=='III'?'selected':''}}>Class 3</option>
+										<option value="IV" {{$student->class=='IV'?'selected':''}}>Class 4</option>
+										<option value="V" {{$student->class=='V'?'selected':''}}>Class 5</option>
+										<option value="VI" {{$student->class=='VI'?'selected':''}}>Class 6</option>
+										<option value="VII" {{$student->class=='VII'?'selected':''}}>Class 7</option>
+										<option value="VIII" {{$student->class=='VIII'?'selected':''}}>Class 8</option>
+										<option value="IX" {{$student->class=='IX'?'selected':''}}>Class 9</option>
+										<option value="X" {{$student->class=='X'?'selected':''}}>Class 10</option>
+										<option value="XI" {{$student->class=='XI'?'selected':''}}>Class 11</option>
+										<option value="XII" {{$student->class=='XII'?'selected':''}}>Class 12</option>
+										<option value="teacher"  {{$student->class=='teacher'?'selected':''}}>Teacher</option>
+										<option value="caretaker"  {{$student->class=='caretaker'?'selected':''}}>Caretaker</option>
+										<option value="driver"  {{$student->class=='driver'?'selected':''}}>Driver</option>
+										<option value="director"  {{$student->class=='director'?'selected':''}}>Director</option>
+									</select>
+							
+								</div>
+								<div class="col-md-12 mb-2">
+									<select name="section" id="section" class="form-control">
+										<option value="">Choose Section</option>
+										<option value="a"  {{$student->section=='a'?'selected':''}}>A</option>
+										<option value="b"  {{$student->section=='b'?'selected':''}}>B</option>
+										<option value="c"  {{$student->section=='c'?'selected':''}}>C</option>
+										<option value="d"  {{$student->section=='d'?'selected':''}}>D</option>
+										<option value="e"  {{$student->section=='e'?'selected':''}}>E</option>
+										<option value="f"  {{$student->section=='f'?'selected':''}}>F</option>
+									</select>
 								</div>
 							</div>
                             <div class="form-group">
@@ -144,6 +179,7 @@
             formData.append('father_name', document.getElementById('father_name').value);
             formData.append('mother_name', document.getElementById('mother_name').value);
             formData.append('class', document.getElementById('class').value);
+			formData.append('section', document.getElementById('section').value);
             formData.append('roll_no', document.getElementById('roll_no').value);
 			formData.append('addmission_no', document.getElementById('addmission_no').value);
 			formData.append('dob', document.getElementById('dob').value);
